@@ -52,20 +52,20 @@ class PickResult {
   final String? website;
   final List<Review>? reviews;
 
-  factory PickResult.fromGeocodingResult(GeocodingResult result) {
+  factory PickResult.fromGeocodingResult(GeocodingResult result, Geometry? geometry) {
     return PickResult(
       placeId: result.placeId,
-      geometry: result.geometry,
+      geometry: geometry ?? result.geometry,
       formattedAddress: result.formattedAddress,
       types: result.types,
       addressComponents: result.addressComponents,
     );
   }
 
-  factory PickResult.fromPlaceDetailResult(PlaceDetails result) {
+  factory PickResult.fromPlaceDetailResult(PlaceDetails result, Geometry? geometry) {
     return PickResult(
       placeId: result.placeId,
-      geometry: result.geometry,
+      geometry: geometry ?? result.geometry,
       formattedAddress: result.formattedAddress,
       types: result.types,
       addressComponents: result.addressComponents,

@@ -142,6 +142,14 @@ class GoogleMapPlacePicker extends StatelessWidget {
       return;
     }
 
+    Geometry? geometry = Geometry(
+        bounds: response.results[0].geometry.bounds,
+        locationType: response.results[0].geometry.locationType,
+        viewport: response.results[0].geometry.viewport,
+        location: Location(
+            lat: provider.cameraPosition!.target.latitude,
+            lng: provider.cameraPosition!.target.longitude)
+    );
     if (usePlaceDetailSearch!) {
       final PlacesDetailsResponse detailResponse =
           await provider.places.getDetailsByPlaceId(
@@ -160,11 +168,12 @@ class GoogleMapPlacePicker extends StatelessWidget {
         return;
       }
 
+
       provider.selectedPlace =
-          PickResult.fromPlaceDetailResult(detailResponse.result);
+          PickResult.fromPlaceDetailResult(detailResponse.result, geometry);
     } else {
       provider.selectedPlace =
-          PickResult.fromGeocodingResult(response.results[0]);
+          PickResult.fromGeocodingResult(response.results[0], geometry);
     }
 
     provider.placeSearchingState = SearchingState.Idle;
