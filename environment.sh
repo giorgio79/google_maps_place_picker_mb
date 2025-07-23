@@ -18,5 +18,8 @@ export PATH="$PATH:`flutter pub bin cache`" # Ensure Dart tools are also in PATH
 echo "Running flutter doctor to check for Flutter environment issues..."
 flutter doctor
 
+flutter pub get
+
 echo "Flutter environment setup complete."
 echo "You may need to restart your terminal or source this script to apply changes: source environment.sh"
+
