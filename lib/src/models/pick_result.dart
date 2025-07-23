@@ -11,7 +11,6 @@ class PickResult {
     this.adrAddress,
     this.formattedPhoneNumber,
     this.id,
-    this.reference,
     this.icon,
     this.name,
     this.openingHours,
@@ -19,7 +18,6 @@ class PickResult {
     this.internationalPhoneNumber,
     this.priceLevel,
     this.rating,
-    this.scope,
     this.url,
     this.vicinity,
     this.utcOffset,
@@ -37,15 +35,13 @@ class PickResult {
   final String? adrAddress;
   final String? formattedPhoneNumber;
   final String? id;
-  final String? reference;
   final String? icon;
   final String? name;
-  final OpeningHoursDetail? openingHours;
+  final PlaceOpeningHours? openingHours;
   final List<Photo>? photos;
   final String? internationalPhoneNumber;
   final PriceLevel? priceLevel;
   final num? rating;
-  final String? scope;
   final String? url;
   final String? vicinity;
   final num? utcOffset;
@@ -72,7 +68,6 @@ class PickResult {
       adrAddress: result.adrAddress,
       formattedPhoneNumber: result.formattedPhoneNumber,
       id: result.id,
-      reference: result.reference,
       icon: result.icon,
       name: result.name,
       openingHours: result.openingHours,
@@ -80,7 +75,6 @@ class PickResult {
       internationalPhoneNumber: result.internationalPhoneNumber,
       priceLevel: result.priceLevel,
       rating: result.rating,
-      scope: result.scope,
       url: result.url,
       vicinity: result.vicinity,
       utcOffset: result.utcOffset,

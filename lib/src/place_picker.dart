@@ -383,7 +383,7 @@ class _PlacePickerState extends State<PlacePicker> {
               },
               onSearchFailed: (status) {
                 if (widget.onAutoCompleteFailed != null) {
-                  widget.onAutoCompleteFailed!(status);
+                  widget.onAutoCompleteFailed!(status.toString());
                 }
               },
               autocompleteOffset: widget.autocompleteOffset,
@@ -416,12 +416,15 @@ class _PlacePickerState extends State<PlacePicker> {
     if (response.errorMessage?.isNotEmpty == true ||
         response.status == "REQUEST_DENIED") {
       if (widget.onAutoCompleteFailed != null) {
-        widget.onAutoCompleteFailed!(response.status);
+        widget.onAutoCompleteFailed!(response.status.toString());
       }
       return;
     }
 
-    provider!.selectedPlace = PickResult.fromPlaceDetailResult(response.result, null);
+    if (response.result != null) {
+      provider!.selectedPlace =
+          PickResult.fromPlaceDetailResult(response.result!, null);
+    }
 
     // Prevents searching again by camera movement.
     provider!.isAutoCompleteSearching = true;

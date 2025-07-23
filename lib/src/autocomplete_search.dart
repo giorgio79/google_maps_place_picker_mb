@@ -315,12 +315,14 @@ class AutoCompleteSearchState extends State<AutoCompleteSearch> {
       if (response.errorMessage?.isNotEmpty == true ||
           response.status == "REQUEST_DENIED") {
         if (widget.onSearchFailed != null) {
-          widget.onSearchFailed!(response.status);
+          widget.onSearchFailed!(response.status.toString());
         }
         return;
       }
 
-      _displayOverlay(_buildPredictionOverlay(response.predictions));
+      if (response.predictions != null) {
+        _displayOverlay(_buildPredictionOverlay(response.predictions!));
+      }
     }
   }
 

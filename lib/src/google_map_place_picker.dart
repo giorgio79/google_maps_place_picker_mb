@@ -134,24 +134,24 @@ class GoogleMapPlacePicker extends StatelessWidget {
         response.status == "REQUEST_DENIED") {
       print("Camera Location Search Error: " + response.errorMessage!);
       if (onSearchFailed != null) {
-        onSearchFailed!(response.status);
+        onSearchFailed!(response.status.toString());
       }
       provider.placeSearchingState = SearchingState.Idle;
       return;
     }
 
-    Geometry? geometry = Geometry(
-        bounds: response.results[0].geometry.bounds,
-        locationType: response.results[0].geometry.locationType,
-        viewport: response.results[0].geometry.viewport,
+    Geometry? geometry = response.results != null && response.results!.isNotEmpty ? Geometry(
+        bounds: response.results![0].geometry?.bounds,
+        locationType: response.results![0].geometry?.locationType,
+        viewport: response.results![0].geometry?.viewport,
         location: Location(
             lat: provider.cameraPosition!.target.latitude,
             lng: provider.cameraPosition!.target.longitude)
-    );
-    if (usePlaceDetailSearch!) {
+    ) : null;
+    if (usePlaceDetailSearch! && response.results != null && response.results!.isNotEmpty) {
       final PlacesDetailsResponse detailResponse =
           await provider.places.getDetailsByPlaceId(
-        response.results[0].placeId,
+        response.results![0].placeId ?? "",
         language: language,
       );
 
@@ -160,18 +160,20 @@ class GoogleMapPlacePicker extends StatelessWidget {
         print("Fetching details by placeId Error: " +
             detailResponse.errorMessage!);
         if (onSearchFailed != null) {
-          onSearchFailed!(detailResponse.status);
+          onSearchFailed!(detailResponse.status.toString());
         }
         provider.placeSearchingState = SearchingState.Idle;
         return;
       }
 
 
+      if (detailResponse.result != null) {
+        provider.selectedPlace =
+            PickResult.fromPlaceDetailResult(detailResponse.result!, geometry);
+      }
+    } else if (response.results != null && response.results!.isNotEmpty) {
       provider.selectedPlace =
-          PickResult.fromPlaceDetailResult(detailResponse.result, geometry);
-    } else {
-      provider.selectedPlace =
-          PickResult.fromGeocodingResult(response.results[0], geometry);
+          PickResult.fromGeocodingResult(response.results![0], geometry);
     }
 
     provider.placeSearchingState = SearchingState.Idle;
