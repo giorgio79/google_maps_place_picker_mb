@@ -1,3 +1,4 @@
+git rm -r --cached .
 #!/bin/bash
 
 # Update package list and install necessary tools if not present
