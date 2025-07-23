@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_google_maps_webservices/places.dart';
+import 'package:google_maps_apis/places.dart';
 
 class PredictionTile extends StatelessWidget {
   final Prediction prediction;
