@@ -31,11 +31,11 @@ class PredictionTile extends StatelessWidget {
     if (prediction.matchedSubstrings != null && prediction.matchedSubstrings!.isNotEmpty) {
       MatchedSubstring matchedSubString = prediction.matchedSubstrings![0];
       // There is no matched string at the beginning.
-      if (matchedSubString.offset! > 0) {
+      if (matchedSubString.offset > 0) {
         result.add(
           TextSpan(
             text: prediction.description
-                ?.substring(0, matchedSubString.offset!.toInt()),
+                ?.substring(0, matchedSubString.offset.toInt()),
             style: TextStyle(
                 color: textColor, fontSize: 16, fontWeight: FontWeight.w300),
           ),
@@ -46,20 +46,20 @@ class PredictionTile extends StatelessWidget {
       result.add(
         TextSpan(
           text: prediction.description?.substring(
-              matchedSubString.offset!.toInt(),
-              matchedSubString.offset!.toInt() + matchedSubString.length!.toInt()),
+              matchedSubString.offset.toInt(),
+              matchedSubString.offset.toInt() + matchedSubString.length.toInt()),
           style: TextStyle(
               color: textColor, fontSize: 16, fontWeight: FontWeight.w500),
         ),
       );
 
       // Other strings.
-      if (matchedSubString.offset!.toInt() + matchedSubString.length!.toInt() <
+      if (matchedSubString.offset.toInt() + matchedSubString.length.toInt() <
           (prediction.description?.length ?? 0)) {
         result.add(
           TextSpan(
             text: prediction.description?.substring(
-                matchedSubString.offset!.toInt() + matchedSubString.length!.toInt()),
+                matchedSubString.offset.toInt() + matchedSubString.length.toInt()),
             style: TextStyle(
                 color: textColor, fontSize: 16, fontWeight: FontWeight.w300),
           ),
