@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_google_maps_webservices/places.dart';
+import 'package:google_maps_apis/places.dart';
 
 class PredictionTile extends StatelessWidget {
   final Prediction prediction;
@@ -28,14 +28,14 @@ class PredictionTile extends StatelessWidget {
     final List<TextSpan> result = <TextSpan>[];
     final textColor = Theme.of(context).textTheme.bodyMedium!.color;
 
-    if (prediction.matchedSubstrings.length > 0) {
-      MatchedSubstring matchedSubString = prediction.matchedSubstrings[0];
+    if (prediction.matchedSubstrings != null && prediction.matchedSubstrings!.isNotEmpty) {
+      MatchedSubstring matchedSubString = prediction.matchedSubstrings![0];
       // There is no matched string at the beginning.
-      if (matchedSubString.offset > 0) {
+      if (matchedSubString.offset! > 0) {
         result.add(
           TextSpan(
             text: prediction.description
-                ?.substring(0, matchedSubString.offset as int?),
+                ?.substring(0, matchedSubString.offset!.toInt()),
             style: TextStyle(
                 color: textColor, fontSize: 16, fontWeight: FontWeight.w300),
           ),
@@ -46,20 +46,20 @@ class PredictionTile extends StatelessWidget {
       result.add(
         TextSpan(
           text: prediction.description?.substring(
-              matchedSubString.offset as int,
-              matchedSubString.offset + matchedSubString.length as int?),
+              matchedSubString.offset!.toInt(),
+              matchedSubString.offset!.toInt() + matchedSubString.length!.toInt()),
           style: TextStyle(
               color: textColor, fontSize: 16, fontWeight: FontWeight.w500),
         ),
       );
 
       // Other strings.
-      if (matchedSubString.offset + matchedSubString.length <
+      if (matchedSubString.offset!.toInt() + matchedSubString.length!.toInt() <
           (prediction.description?.length ?? 0)) {
         result.add(
           TextSpan(
             text: prediction.description?.substring(
-                matchedSubString.offset + matchedSubString.length as int),
+                matchedSubString.offset!.toInt() + matchedSubString.length!.toInt()),
             style: TextStyle(
                 color: textColor, fontSize: 16, fontWeight: FontWeight.w300),
           ),

@@ -6,7 +6,7 @@ import 'package:google_maps_place_picker_mb/providers/place_provider.dart';
 import 'package:google_maps_place_picker_mb/providers/search_provider.dart';
 import 'package:google_maps_place_picker_mb/src/components/prediction_tile.dart';
 import 'package:google_maps_place_picker_mb/src/controllers/autocomplete_search_controller.dart';
-import 'package:flutter_google_maps_webservices/places.dart';
+import 'package:google_maps_apis/places.dart';
 import 'package:provider/provider.dart';
 
 class AutoCompleteSearch extends StatefulWidget {
@@ -315,12 +315,14 @@ class AutoCompleteSearchState extends State<AutoCompleteSearch> {
       if (response.errorMessage?.isNotEmpty == true ||
           response.status == "REQUEST_DENIED") {
         if (widget.onSearchFailed != null) {
-          widget.onSearchFailed!(response.status);
+          widget.onSearchFailed!(response.status.toString());
         }
         return;
       }
 
-      _displayOverlay(_buildPredictionOverlay(response.predictions));
+      if (response.predictions != null) {
+        _displayOverlay(_buildPredictionOverlay(response.predictions!));
+      }
     }
   }
 
